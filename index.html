@@ -1,0 +1,36 @@
+<html>
+<head>
+    <title>Index</title>
+    <script>
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register(`/sw.js`);
+            });
+        }
+
+
+        function sendToCacheContent(url) {
+            console.log("url to cache->", url)
+            return new Promise(async () => {
+
+                caches.open('offline')
+                    .then(async cache => {
+                        await cache.add(
+                            url
+                        )
+                    })
+            })
+        }
+
+
+        setTimeout(() => {
+            sendToCacheContent('/video.mp4')
+        }, 1000)
+    </script>
+</head>
+<body>
+<h1>Inicio</h1>
+<video src="video.mp4" controls></video>
+</body>
+</html>
